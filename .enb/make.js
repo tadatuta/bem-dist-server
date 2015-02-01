@@ -38,38 +38,6 @@ module.exports = function(config) {
 
     // placeholder
 
-    config.nodes('dist1422827199410', function(nodeConfig) {
-        nodeConfig.addTechs([
-            [enbBemTechs.levels, { levels: levels }],
-            [require('./techs/levels-to-bemdecl.js'), {
-                filter: function(item) {
-                    return ['attach']
-                        .indexOf(item) > -1;
-                }
-            }],
-            [enbBemTechs.deps],
-            [enbBemTechs.files],
-
-            // css
-            [techs.cssStylus, { target: '?.noprefix.css' }],
-            [techs.cssAutoprefixer, {
-                sourceTarget: '?.noprefix.css',
-                destTarget: '?.css',
-                browserSupport: ['last 2 versions', 'ie 10', 'opera 12.16']
-            }],
-
-            // js
-            [techs.browserJs],
-            [techs.prependYm, { source: '?.browser.js' }],
-
-            // borschik
-            [techs.borschik, { sourceTarget: '?.js', destTarget: '?.min.js', freeze: true, minify: true }],
-            [techs.borschik, { sourceTarget: '?.css', destTarget: '?.min.css', tech: 'cleancss', freeze: true, minify: true }]
-        ]);
-
-        nodeConfig.addTargets(['?.min.css', '?.min.js']);
-    });
-
     config.nodes('*.bundles/*', function(nodeConfig) {
         nodeConfig.addTechs([
             // essential

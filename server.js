@@ -130,6 +130,15 @@ var routes = {
 }
 
 http.createServer(function (req, res) {
+    if (req.url === '/') {
+        res.writeHead(200, {'Content-Type': 'text/html'});
+        return res.end(fs.readFileSync(path.join(__dirname, 'desktop.bundles', 'index', 'index.html'), 'utf8'))
+    }
+
+    if (/^\/_index\.(js|css)/.test(req.url)) {
+        return res.end(fs.readFileSync(path.join(__dirname, 'desktop.bundles', 'index', req.url), 'utf8'))
+    }
+
     var pathname = url.parse(req.url).pathname;
     if (pathname === '/') return routes['/'](req, res);
     if (/^\/dist/.test(pathname)) {
