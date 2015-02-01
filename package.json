@@ -32,7 +32,7 @@
   },
   "scripts": {
     "start": "node server",
-    "build": "enb make",
+    "build": "enb make && node build-page",
     "postinstall": "[ \"$NODE_ENV\" != 'production' ] && bower i || true",
     "deps": "bower i --non-interactive"
   },

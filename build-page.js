@@ -55,7 +55,7 @@ walker.on('end', function() {
                 tag : 'form',
                 attrs : {
                     method : 'get',
-                    action : 'http://localhost:9000/'
+                    action : '/'
                 },
                 content : blocks.sort().map(function(block) {
                     return {
