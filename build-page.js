@@ -41,43 +41,7 @@ walker.on('data', function(data) {
 });
 
 walker.on('end', function() {
-    var json = {
-        block : 'page',
-        title : 'bem-components',
-        head : [
-            { elem : 'css', url : '_index.css' }
-        ],
-        scripts : [
-            { elem : 'js', url : '_index.js' }
-        ],
-        content : [
-            {
-                block : 'form',
-                tag : 'form',
-                attrs : {
-                    method : 'get',
-                    action : '/'
-                },
-                content : blocks.sort().map(function(block) {
-                    return {
-                        content: {
-                            block : 'checkbox',
-                            mods : { theme : 'islands', size : 'm', checked : true },
-                            name: 'blocks',
-                            val : block,
-                            text : block
-                        }
-                    };
-                }).concat({
-                    block : 'button',
-                    mods : { type : 'submit', theme : 'islands', size : 'm' },
-                    text: 'Build bundle'
-                })
-            }
-        ]
-    };
-
-    BEMTREE.apply(json).then(function(bemjson) {
+    BEMTREE.apply({ blocks: blocks }).then(function(bemjson) {
         fs.writeFileSync('desktop.bundles/index/index.html', BEMHTML.apply(bemjson));
     });
 });

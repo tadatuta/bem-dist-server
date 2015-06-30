@@ -1,0 +1,19 @@
+block('form').content()(function() {
+    var blocks = this.data.blocks;
+
+    return blocks.sort().map(function(block) {
+        return {
+            content: {
+                block: 'checkbox',
+                mods: { theme: 'islands', size: 'm', checked: true },
+                name: 'blocks',
+                val: block,
+                text: block
+            }
+        };
+    }).concat({
+        block: 'button',
+        mods: { type: 'submit', theme: 'islands', size: 'm' },
+        text: 'Build bundle'
+    });
+});

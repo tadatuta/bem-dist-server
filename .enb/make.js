@@ -15,11 +15,10 @@ var techs = {
         prependYm: require('enb-modules/techs/prepend-modules'),
 
         // bemtree
-        bemtree: require('enb-bemxjst/techs/bemtree-old'),
+        bemtree: require('enb-bemxjst/techs/bemtree'),
 
         // bemhtml
-        bemhtml: require('enb-bemxjst/techs/bemhtml-old'),
-        htmlFromBemjson: require('enb-bemxjst/techs/html-from-bemjson')
+        bemhtml: require('enb-bemxjst/techs/bemhtml')
     },
     enbBemTechs = require('enb-bem-techs'),
     levels = [
@@ -29,8 +28,7 @@ var techs = {
         { path: 'libs/bem-components/desktop.blocks', check: false },
         { path: 'libs/bem-components/design/common.blocks', check: false },
         { path: 'libs/bem-components/design/desktop.blocks', check: false },
-        'common.blocks',
-        'desktop.blocks'
+        'common.blocks'
     ];
 
 module.exports = function(config) {
@@ -42,8 +40,7 @@ module.exports = function(config) {
         nodeConfig.addTechs([
             // essential
             [enbBemTechs.levels, { levels: levels }],
-            [techs.fileProvider, { target: '?.bemjson.js' }],
-            [enbBemTechs.bemjsonToBemdecl],
+            [techs.fileProvider, { target: '?.bemdecl.js' }],
             [enbBemTechs.deps],
             [enbBemTechs.files],
 
@@ -60,7 +57,6 @@ module.exports = function(config) {
 
             // bemhtml
             [techs.bemhtml, { devMode: process.env.BEMHTML_ENV === 'development' }],
-            [techs.htmlFromBemjson],
 
             // client bemhtml
             [enbBemTechs.depsByTechToBemdecl, {
@@ -96,6 +92,6 @@ module.exports = function(config) {
             [techs.borschik, { sourceTarget: '?.css', destTarget: '_?.css', tech: 'cleancss', freeze: true, minify: isProd }]
         ]);
 
-        nodeConfig.addTargets(['?.bemtree.js', '?.html', '_?.css', '_?.js']);
+        nodeConfig.addTargets(['?.bemtree.js', '?.bemhtml.js', '_?.css', '_?.js']);
     });
 };

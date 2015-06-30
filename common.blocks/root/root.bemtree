@@ -1,0 +1,14 @@
+block('root').def()(function() {
+    this.data = this.ctx;
+
+    return applyCtx({
+        block: 'page',
+        title: 'bem-components',
+        head: [
+            { elem: 'css', url: '_index.css' }
+        ],
+        scripts: [
+            { elem: 'js', url: '_index.js' }
+        ]
+    });
+});
