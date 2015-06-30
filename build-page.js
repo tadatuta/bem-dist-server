@@ -41,7 +41,10 @@ walker.on('data', function(data) {
 });
 
 walker.on('end', function() {
-    BEMTREE.apply({ blocks: blocks }).then(function(bemjson) {
+    BEMTREE.apply({
+        block: 'root',
+        blocks: blocks
+    }).then(function(bemjson) {
         fs.writeFileSync('desktop.bundles/index/index.html', BEMHTML.apply(bemjson));
     });
 });
