@@ -35,7 +35,7 @@
   "scripts": {
     "start": "node server",
     "build": "enb make && node build-page",
-    "clean": "rm -rf cache.json dists/dist*",
+    "clean": "git checkout dists/.enb/make.js && rm -rf cache.json dists/dist*",
     "postinstall": "[ \"$NODE_ENV\" != 'production' ] && bower i || true",
     "deps": "bower i --non-interactive && cd dists && bower i --non-interactive"
   },
