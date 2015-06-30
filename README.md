@@ -1,4 +1,4 @@
-WIP
+# bem-dist-server
 
 ```sh
 git clone https://github.com/tadatuta/bem-dist-server.git
