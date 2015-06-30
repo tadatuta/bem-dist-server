@@ -8,6 +8,7 @@ var techs = {
 
         // css
         cssStylus: require('enb-stylus/techs/css-stylus'),
+        stylusWithAutoprefixer: require('enb-stylus/techs/css-stylus-with-autoprefixer'),
         cssAutoprefixer: require('enb-autoprefixer/techs/css-autoprefixer'),
 
         // js
@@ -18,7 +19,11 @@ var techs = {
         bemtree: require('enb-bemxjst/techs/bemtree'),
 
         // bemhtml
-        bemhtml: require('enb-bemxjst/techs/bemhtml')
+        bemhtml: require('enb-bemxjst/techs/bemhtml'),
+
+        // bh
+        bhServerInclude: require('enb-bh/techs/bh-server-include'),
+        bhClient: require('enb-bh/techs/bh-client')
     },
     enbBemTechs = require('enb-bem-techs'),
     levels = [

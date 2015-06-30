@@ -18,4 +18,4 @@ npm-debug.log
 *.bundles/*/*.bemhtml.bemdecl.js
 
 cache.json
-dist*
+dists/dist*

@@ -1,14 +1,14 @@
 {
-  "author": "",
-  "name": "bem-project-stub",
+  "name": "bem-dist-server",
   "version": "1.0.0",
   "repository": {
     "type": "git",
-    "url": "git://github.com/bem/project-stub.git"
+    "url": "git://github.com/tadatuta/bem-dist-server.git"
   },
   "engines": {
     "node": ">=0.10"
   },
+  "author": "Vladimir Grinenko",
   "dependencies": {
     "bem-environ": "^1.4.0",
     "bem-naming": "^0.5.1",
@@ -16,6 +16,7 @@
     "inherit": "^2.2.2"
   },
   "devDependencies": {
+    "bh": "^3.3.0",
     "borschik": "^1.3.2",
     "borschik-tech-cleancss": "^1.0.3",
     "bower": "^1.4.1",
@@ -23,6 +24,7 @@
     "enb-autoprefixer": "0.2.2",
     "enb-bem-techs": "^1.0.4",
     "enb-bemxjst": "^1.3.4",
+    "enb-bh": "^0.5.0",
     "enb-borschik": "1.4.0",
     "enb-diverse-js": "^0.1.0",
     "enb-modules": "0.2.0",
