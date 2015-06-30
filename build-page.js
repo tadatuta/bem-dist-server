@@ -1,14 +1,14 @@
 // TODO:
 // показывать блоки из bem-core, других библиотек
 // давать возможность выбрать платформу
-// предлагать, какие именно технологии необходимо собрать
 // предлагать, какие именно уровни необходимо собрать
+// предлагать, какие именно технологии необходимо собрать
 
 var fs = require('fs'),
     vm = require('vm'),
 
     walk = require('bem-walk'),
-    walker = walk(['libs/bem-components/common.blocks']),
+    walker = walk(['dists/libs/bem-components/common.blocks']),
     naming = new require('bem-naming')(),
 
     vow = require('./libs/bem-core/common.blocks/vow/vow.vanilla.js'),

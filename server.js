@@ -11,13 +11,13 @@ try {
 
 function updateConfig(nodeName, blocks) {
     var placeholder = '// placeholder',
-        conf = fs.readFileSync('.enb/make.js', 'utf8'),
+        conf = fs.readFileSync('dists/.enb/make.js', 'utf8'),
         confArr = conf.split(placeholder),
         distConf = buildDistConfig(nodeName, blocks);
 
     confArr.splice(1, 0, placeholder, '\n\n', distConf);
 
-    fs.writeFileSync('.enb/make.js', confArr.join(''));
+    fs.writeFileSync('dists/.enb/make.js', confArr.join(''));
 
     // console.log(confArr.join(''));
 }
@@ -151,14 +151,14 @@ var routes = {
             return item.split('=')[1];
         });
 
-        var distFolder = path.join('dists', 'dist' + timestamp);
+        var distFolder = 'dist' + timestamp;
 
         // console.log(blocks);
 
         updateConfig(distFolder, blocks);
 
         var make = spawn('/usr/bin/env', ['enb', 'make', distFolder, '-n'], {
-            cwd: __dirname
+            cwd: path.join(__dirname, 'dists')
         });
 
         make.stdout.on('data', function(data) {

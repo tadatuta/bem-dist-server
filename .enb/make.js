@@ -19,11 +19,7 @@ var techs = {
         bemtree: require('enb-bemxjst/techs/bemtree'),
 
         // bemhtml
-        bemhtml: require('enb-bemxjst/techs/bemhtml'),
-
-        // bh
-        bhServerInclude: require('enb-bh/techs/bh-server-include'),
-        bhClient: require('enb-bh/techs/bh-client')
+        bemhtml: require('enb-bemxjst/techs/bemhtml')
     },
     enbBemTechs = require('enb-bem-techs'),
     levels = [
