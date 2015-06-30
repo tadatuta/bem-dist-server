@@ -9,13 +9,11 @@ try {
     cache = require('./cache.json');
 } catch(e) {}
 
-var LIB_NAME = 'bem-components';
-
 function updateConfig(nodeName, blocks) {
     var placeholder = '// placeholder',
         conf = fs.readFileSync('.enb/make.js', 'utf8'),
         confArr = conf.split(placeholder),
-        distConf = buildDistConfig(nodeName, LIB_NAME, blocks);
+        distConf = buildDistConfig(nodeName, blocks);
 
     confArr.splice(1, 0, placeholder, '\n\n', distConf);
 
@@ -24,7 +22,7 @@ function updateConfig(nodeName, blocks) {
     // console.log(confArr.join(''));
 }
 
-function buildDistConfig(nodeName, libName, blocks) {
+function buildDistConfig(nodeName, blocks) {
     return [
         "    config.nodes('" + nodeName + "', function(nodeConfig) {",
         "        nodeConfig.addTechs([",
@@ -39,7 +37,7 @@ function buildDistConfig(nodeName, libName, blocks) {
         "            [enbBemTechs.deps, { bemdeclFile : '.tmp.bemdecl.js', target : '.tmp.deps.js' }],",
         "            [enbBemTechs.files, { depsFile : '.tmp.deps.js' }],",
         "            [techs.stylusWithAutoprefixer, {",
-        "                target : '" + libName + ".dev.css',",
+        "                target : '?.dev.css',",
         "                browsers : [",
         "                   'last 2 versions',",
         "                   'ie 10',",
@@ -48,7 +46,7 @@ function buildDistConfig(nodeName, libName, blocks) {
         "               ]",
         "            }],",
         "            [techs.cssStylus, {",
-        "                target : '" + libName + ".dev.ie.css',",
+        "                target : '?.dev.ie.css',",
         "                sourceSuffixes : ['styl', 'ie.styl']",
         "            }],",
         "            [enbBemTechs.depsByTechToBemdecl, {",
@@ -76,36 +74,36 @@ function buildDistConfig(nodeName, libName, blocks) {
         "            [techs.borschik, { source : '.tmp.pre-source.js', target : '.tmp.source.js', freeze : false, minify : false }],",
         "            [techs.prependYm, {",
         "                source : '.tmp.source.js',",
-        "                target : '" + libName + ".dev.js'",
+        "                target : '?.dev.js'",
         "            }],",
-        "            [techs.bemhtml, { target : '" + libName + ".dev.bemhtml.js', devMode : false }],",
-        "            [techs.bhServerInclude, { target : '" + libName + ".dev.bh.js', jsAttrName : 'data-bem', jsAttrScheme : 'json', mimic : ['BH', 'BEMHTML'] }],",
+        "            [techs.bemhtml, { target : '?.dev.bemhtml.js', devMode : false }],",
+        "            [techs.bhServerInclude, { target : '?.dev.bh.js', jsAttrName : 'data-bem', jsAttrScheme : 'json', mimic : ['BH', 'BEMHTML'] }],",
         "            [techs.bhClient, { target : '.tmp.browser.bh.js', jsAttrName : 'data-bem', jsAttrScheme : 'json', mimic : ['BH', 'BEMHTML'] }],",
         "            [techs.fileMerge, {",
-        "                target : '" + libName + ".dev.js+bemhtml.js',",
-        "                sources : ['" + libName + ".dev.js', '" + libName + ".dev.bemhtml.js']",
+        "                target : '?.dev.js+bemhtml.js',",
+        "                sources : ['?.dev.js', '?.dev.bemhtml.js']",
         "            }],",
         "            [techs.fileMerge, {",
-        "                target : '" + libName + ".dev.js+bh.js',",
-        "                sources : ['" + libName + ".dev.js', '.tmp.browser.bh.js']",
+        "                target : '?.dev.js+bh.js',",
+        "                sources : ['?.dev.js', '.tmp.browser.bh.js']",
         "            }],",
-        "            [techs.borschik, { source : '" + libName + ".dev.css', target : '" + libName + ".css', tech : 'cleancss', freeze : true, minify : true }],",
-        "            [techs.borschik, { source : '" + libName + ".dev.ie.css', target : '" + libName + ".ie.css', tech : 'cleancss', freeze : true, minify : true }],",
-        "            [techs.borschik, { source : '" + libName + ".dev.js', target : '" + libName + ".js', freeze : true, minify : true }],",
-        "            [techs.borschik, { source : '" + libName + ".dev.bemhtml.js', target : '" + libName + ".bemhtml.js', freeze : true, minify : true }],",
-        "            [techs.borschik, { source : '" + libName + ".dev.bh.js', target : '" + libName + ".bh.js', freeze : true, minify : true }],",
-        "            [techs.borschik, { source : '" + libName + ".dev.js+bemhtml.js', target : '" + libName + ".js+bemhtml.js', freeze : true, minify : true }],",
-        "            [techs.borschik, { source : '" + libName + ".dev.js+bh.js', target : '" + libName + ".js+bh.js', freeze : true, minify : true }]",
+        "            [techs.borschik, { source : '?.dev.css', target : '?.css', tech : 'cleancss', freeze : true, minify : true }],",
+        "            [techs.borschik, { source : '?.dev.ie.css', target : '?.ie.css', tech : 'cleancss', freeze : true, minify : true }],",
+        "            [techs.borschik, { source : '?.dev.js', target : '?.js', freeze : true, minify : true }],",
+        "            [techs.borschik, { source : '?.dev.bemhtml.js', target : '?.bemhtml.js', freeze : true, minify : true }],",
+        "            [techs.borschik, { source : '?.dev.bh.js', target : '?.bh.js', freeze : true, minify : true }],",
+        "            [techs.borschik, { source : '?.dev.js+bemhtml.js', target : '?.js+bemhtml.js', freeze : true, minify : true }],",
+        "            [techs.borschik, { source : '?.dev.js+bh.js', target : '?.js+bh.js', freeze : true, minify : true }]",
         "        ]);",
         "",
         "        nodeConfig.addTargets([",
-        "            '" + libName + ".css', '" + libName + ".ie.css', '" + libName + ".js', '" + libName + ".bemhtml.js', '" + libName + ".bh.js', '" + libName + ".js+bemhtml.js', '" + libName + ".js+bh.js'",
+        "            '?.css', '?.ie.css', '?.js', '?.bemhtml.js', '?.bh.js', '?.js+bemhtml.js', '?.js+bh.js'",
         "        ]);",
         "    });"
     ].join('\n');
 }
 
-function buildDownloadLinks(timestamp, libName) {
+function buildDownloadLinks(timestamp) {
     return [
         'css',
         'ie.css',
@@ -127,7 +125,7 @@ function buildDownloadLinks(timestamp, libName) {
         'dev.bemhtml.js',
         'dev.bh.js'
     ].map(function(tech) {
-        return '<a href="/dists/dist' + timestamp + '/dist' + timestamp + '.' + tech + '">' + libName + '.' + tech + '</a>';
+        return '<a href="/dists/dist' + timestamp + '/dist' + timestamp + '.' + tech + '">' + timestamp + '.' + tech + '</a>';
     }).join('<br>');
 }
 
@@ -138,7 +136,7 @@ var routes = {
 
         if (timestamp = cache[query]) {
             console.log('cache hit');
-            res.end(buildDownloadLinks(timestamp, LIB_NAME));
+            res.end(buildDownloadLinks(timestamp));
             return;
         }
 
@@ -176,7 +174,7 @@ var routes = {
             cache[query] = timestamp;
             fs.writeFileSync('cache.json', JSON.stringify(cache, null, 4));
             res.writeHead(200, {'Content-Type': 'text/html'});
-            res.end(buildDownloadLinks(timestamp, LIB_NAME));
+            res.end(buildDownloadLinks(timestamp));
             // res.end('<pre>' + JSON.stringify(require('./dists/dist' + timestamp + '/dist' + timestamp + '.bemdecl.js').blocks, null, 4) + '</pre>');
         });
     },
