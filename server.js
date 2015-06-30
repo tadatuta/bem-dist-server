@@ -125,7 +125,7 @@ function buildDownloadLinks(timestamp) {
         'dev.bemhtml.js',
         'dev.bh.js'
     ].map(function(tech) {
-        return '<a href="/dists/dist' + timestamp + '/dist' + timestamp + '.' + tech + '">' + timestamp + '.' + tech + '</a>';
+        return '<a href="/dists/dist' + timestamp + '/dist' + timestamp + '.' + tech + '">dist' + timestamp + '.' + tech + '</a>';
     }).join('<br>');
 }
 
