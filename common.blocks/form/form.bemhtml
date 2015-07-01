@@ -1,4 +1,5 @@
 block('form')(
+    js()(true),
     tag()('form'),
     attrs()(function() {
         var ctx = this.ctx;

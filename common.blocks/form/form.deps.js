@@ -6,7 +6,7 @@
         },
         {
             block: 'button',
-            mods: { type: 'submit', theme: 'islands', size: 'm' }
+            mods: { type: 'submit', theme: 'islands', size: 'm', view: 'action' }
         }
     ]
 })

@@ -13,7 +13,12 @@ block('form').content()(function() {
         };
     }).concat({
         block: 'button',
-        mods: { type: 'submit', theme: 'islands', size: 'm' },
+        mods: { theme: 'islands', size: 'm' },
+        mix: { block: 'form', elem: 'toggle' },
+        text: 'Toggle'
+    }, {
+        block: 'button',
+        mods: { type: 'submit', theme: 'islands', size: 'm', view: 'action' },
         text: 'Build bundle'
     });
 });
