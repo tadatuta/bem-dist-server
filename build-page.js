@@ -8,7 +8,10 @@ var fs = require('fs'),
     vm = require('vm'),
 
     walk = require('bem-walk'),
-    walker = walk(['dists/libs/bem-components/common.blocks']),
+    walker = walk([
+        'dists/libs/bem-components/common.blocks',
+        'dists/libs/bem-grid/common.blocks'
+    ]),
     naming = new require('bem-naming')(),
 
     vow = require('./libs/bem-core/common.blocks/vow/vow.vanilla.js'),
