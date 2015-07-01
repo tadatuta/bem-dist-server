@@ -9,6 +9,7 @@
     "libs"
   ],
   "dependencies": {
-    "bem-components": "2.2.1"
+    "bem-components": "2.2.1",
+    "bem-grid": "bem-incubator/bem-grid#update"
   }
 }
