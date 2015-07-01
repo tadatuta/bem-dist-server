@@ -26,15 +26,15 @@ var BEMTREE = ctx.BEMTREE;
 var blocks = [];
 
 walker.on('data', function(data) {
-    var type = naming.typeOf(data.bem),
-        block = data.block;
+    var entity = data.entity,
+        type = naming.typeOf(entity),
+        block = entity.block;
 
+    // if (['block', 'blockMod'].indexOf(type) < 0) return;
     if (['block'].indexOf(type) < 0) return;
     if (blocks.indexOf(block) > -1) return;
 
     blocks.push(block);
-
-    // if (['block', 'blockMod'].indexOf(type) < 0) return;
 
     // console.log(data);
     // console.log(naming.typeOf(data.bem));
@@ -47,4 +47,8 @@ walker.on('end', function() {
     }).then(function(bemjson) {
         fs.writeFileSync('desktop.bundles/index/index.html', BEMHTML.apply(bemjson));
     });
+});
+
+walker.on('error', function(err) {
+    console.log('error', err);
 });

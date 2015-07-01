@@ -12,7 +12,7 @@
   "dependencies": {
     "bem-environ": "^1.4.0",
     "bem-naming": "^0.5.1",
-    "bem-walk": "0.0.4",
+    "bem-walk": "bem/bem-walk#52e547b32e6efecbf24270f2c4bc33447818f463",
     "inherit": "^2.2.2"
   },
   "devDependencies": {
