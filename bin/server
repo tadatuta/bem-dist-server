@@ -1,0 +1,3 @@
+#!/bin/bash
+
+./node_modules/.bin/forever start -a -l `pwd`/logs/forever.log -o `pwd`/logs/stdout.log -e `pwd`/logs/stderr.log server.js
