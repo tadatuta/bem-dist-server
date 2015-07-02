@@ -91,7 +91,10 @@ var routes = {
             tar.on('close', function(code) {
                 console.log('tar exited with code ' + code);
 
-                if (code !== 0) return res.writeHead(500, {'Content-Type': 'text/html'}).end('Error');
+                if (code !== 0) {
+                    res.writeHead(500, {'Content-Type': 'text/html'});
+                    return res.end('Error');
+                }
 
                 fs.writeFileSync('cache.json', JSON.stringify(cache, null, 4));
                 res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'});
