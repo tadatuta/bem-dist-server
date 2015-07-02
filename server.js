@@ -67,7 +67,7 @@ var routes = {
         var env = process.env;
         env.enbPlatform = query.platform;
 
-        var make = spawn('/usr/bin/env', ['enb', 'make', distFolder, '-n'], {
+        var make = spawn('/usr/bin/env', ['./node_modules/.bin/enb', 'make', distFolder, '-n'], {
             cwd: path.join(__dirname, 'dists'),
             env: env
         });
