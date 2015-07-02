@@ -26,4 +26,5 @@ cd dists
 ```
 
 2) Add all provided levels to `config.js` in proper order.
+
 3) Optionally add path to library documentation to `libs-to-docs.json`.

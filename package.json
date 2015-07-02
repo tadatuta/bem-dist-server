@@ -37,8 +37,8 @@
     "start": "node server",
     "build": "enb make -d static && node build-page",
     "clean": "git checkout dists/.enb/make.js && rm -rf cache.json dists/dist*",
-    "postinstall": "[ \"$NODE_ENV\" != 'production' ] && cd static && bower i || true",
-    "deps": "cd static && bower i --non-interactive && cd ../dists && bower i --non-interactive"
+    "postinstall": "[ \"$NODE_ENV\" != 'production' ] && npm run deps || true",
+    "deps": "cd static && bower i && cd ../dists && bower i"
   },
   "private": true
 }
