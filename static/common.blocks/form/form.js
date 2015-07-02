@@ -4,7 +4,9 @@ provide(BEMDOM.decl(this.name, {
     onSetMod: {
         js: {
             inited: function() {
-                var checkboxes = this.findBlocksInside('checkbox');
+                var checkboxes = this.findBlocksInside('checkbox'),
+                    spin = this.findBlockInside('spin'),
+                    $result = this.elem('result');
 
                 Button.on(this.elem('toggle'), 'click', function() {
                     checkboxes.forEach(function(checkbox) {
@@ -15,11 +17,15 @@ provide(BEMDOM.decl(this.name, {
                 this.bindTo('submit', function(e) {
                     e.preventDefault();
 
-                    var query = this.domElem.serialize(),
-                        $result = this.elem('result');
+                    var query = this.domElem.serialize();
+
+                    spin.setMod('visible');
 
                     $.get('/?' + query).then(function(data) {
                         BEMDOM.update($result, data);
+                        spin.delMod('visible');
+                    }).fail(function() {
+                        spin.delMod('visible');
                     });
                 });
             }

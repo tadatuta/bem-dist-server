@@ -38,5 +38,10 @@ block('form').content()(function() {
                 text: 'Build bundle'
             }
         ]
-    }, { elem: 'result' });
+    },
+    { elem: 'result' },
+    {
+        block: 'spin',
+        mods: { theme: 'islands', size: 'xl' }
+    });
 });
