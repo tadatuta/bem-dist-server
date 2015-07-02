@@ -55,7 +55,7 @@ var routes = {
 
         query = querystring.parse(queryStr);
 
-        var blocks = query.blocks,
+        var blocks = [].concat(query.blocks),
             distFolder = 'dist' + timestamp;
 
         // console.log(blocks);
