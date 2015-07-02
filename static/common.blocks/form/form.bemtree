@@ -14,24 +14,29 @@ block('form').content()(function() {
                     block: 'level',
                     content: [
                         {
-                            elem: 'title',
+                            elem: 'head',
                             content: [
-                                libUrl ? {
-                                    block: 'link',
-                                    url: libUrl,
-                                    content: lib
-                                } : lib,
+                                {
+                                    elem: 'title',
+                                    content: [
+                                        libUrl ? {
+                                            block: 'link',
+                                            url: libUrl,
+                                            content: lib
+                                        } : lib,
+                                        ' ',
+                                        {
+                                            block: 'button',
+                                            mods: { theme: 'islands', size: 's' },
+                                            mix: { block: 'level', elem: 'toggle' },
+                                            text: 'Toggle'
+                                        }
+                                    ]
+                                },
                                 libVersion ? {
                                     elem: 'version',
-                                    content: '@' + data.libs[lib]
-                                } : '',
-                                ' ',
-                                {
-                                    block: 'button',
-                                    mods: { theme: 'islands', size: 's' },
-                                    mix: { block: 'level', elem: 'toggle' },
-                                    text: 'Toggle'
-                                }
+                                    content: data.libs[lib]
+                                } : ''
                             ]
                         },
                         blocks[lib].sort().map(function(block) {
