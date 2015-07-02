@@ -1,4 +1,4 @@
-libs/
+static/libs/
 node_modules/
 .DS_Store
 .idea
@@ -7,15 +7,15 @@ node_modules/
 npm-debug.log
 
 # bem
-.bem/cache/
-.enb/tmp/
-*bundles*/*/*.*
-!*bundles*/*/*.bemdecl.js
-!*bundles*/.bem/*
-*pages*/*/*.*
-!*pages*/*/*.bemdecl.js
-!*pages*/.bem/*
-*.bundles/*/*.bemhtml.bemdecl.js
+static/.bem/cache/
+static/.enb/tmp/
+static/*bundles*/*/*.*
+static/!*bundles*/*/*.bemdecl.js
+static/!*bundles*/.bem/*
+static/*pages*/*/*.*
+static/!*pages*/*/*.bemdecl.js
+static/!*pages*/.bem/*
+static/*.bundles/*/*.bemhtml.bemdecl.js
 
 cache.json
 dists/dist*

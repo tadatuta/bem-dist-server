@@ -10,6 +10,6 @@
   ],
   "dependencies": {
     "bem-components": "2.2.1",
-    "bem-grid": "bem-incubator/bem-grid#update"
+    "bem-grid": "bem-incubator/bem-grid#master"
   }
 }

@@ -4,6 +4,7 @@ block('root').def()(function() {
     return applyCtx({
         block: 'page',
         title: 'bem-components',
+        mods: { theme: 'islands' },
         head: [
             { elem: 'css', url: '_index.css' }
         ],

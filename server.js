@@ -18,8 +18,6 @@ function updateConfig(nodeName, blocks) {
     confArr.splice(1, 0, placeholder, '\n\n', distConf);
 
     fs.writeFileSync('dists/.enb/make.js', confArr.join(''));
-
-    // console.log(confArr.join(''));
 }
 
 function buildDistConfig(nodeName, blocks) {
@@ -194,11 +192,15 @@ var routes = {
 http.createServer(function (req, res) {
     if (req.url === '/') {
         res.writeHead(200, {'Content-Type': 'text/html'});
-        return res.end(fs.readFileSync(path.join(__dirname, 'desktop.bundles', 'index', 'index.html'), 'utf8'))
+        return res.end(fs.readFileSync(path.join(__dirname, 'static', 'desktop.bundles', 'index', 'index.html'), 'utf8'))
     }
 
     if (/^\/_index\.(js|css)/.test(req.url)) {
-        return res.end(fs.readFileSync(path.join(__dirname, 'desktop.bundles', 'index', req.url), 'utf8'))
+        return res.end(fs.readFileSync(path.join(__dirname, 'static', 'desktop.bundles', 'index', req.url), 'utf8'))
+    }
+
+    if (req.url === '/favicon.ico') {
+        return res.end(fs.readFileSync(path.join(__dirname, 'static', req.url)));
     }
 
     var pathname = url.parse(req.url).pathname;

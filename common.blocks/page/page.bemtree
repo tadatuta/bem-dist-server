@@ -1,9 +1,0 @@
-block('page').content()(function() {
-    return [
-        {
-            block: 'form',
-            method: 'get',
-            action: '/'
-        }
-    ];
-});

@@ -34,10 +34,10 @@
   },
   "scripts": {
     "start": "node server",
-    "build": "enb make && node build-page",
+    "build": "enb make -d static && node build-page",
     "clean": "git checkout dists/.enb/make.js && rm -rf cache.json dists/dist*",
-    "postinstall": "[ \"$NODE_ENV\" != 'production' ] && bower i || true",
-    "deps": "bower i --non-interactive && cd dists && bower i --non-interactive"
+    "postinstall": "[ \"$NODE_ENV\" != 'production' ] && cd static && bower i || true",
+    "deps": "cd static && bower i --non-interactive && cd ../dists && bower i --non-interactive"
   },
   "private": true
 }

@@ -6,6 +6,7 @@
 
 var fs = require('fs'),
     vm = require('vm'),
+    path = require('path'),
 
     walk = require('bem-walk'),
     walker = walk([
@@ -14,30 +15,38 @@ var fs = require('fs'),
     ]),
     naming = new require('bem-naming')(),
 
-    vow = require('./libs/bem-core/common.blocks/vow/vow.vanilla.js'),
-    bemtreeFile = fs.readFileSync('./desktop.bundles/index/index.bemtree.js', 'utf-8'),
+    pathToBundles = path.resolve('.', 'static', 'desktop.bundles'),
+    bundleName = 'index',
+    pathToBundle = path.join(pathToBundles, bundleName),
+
+    vow = require('./static/libs/bem-core/common.blocks/vow/vow.vanilla.js'),
+    bemtreeFile = fs.readFileSync(path.join(pathToBundle, bundleName + '.bemtree.js'), 'utf-8'),
     ctx = vm.createContext({
         Vow: vow,
         console: console
     }),
-    BEMHTML = require('./desktop.bundles/index/index.bemhtml.js').BEMHTML;
+    BEMHTML = require(path.join(pathToBundle, bundleName + '.bemhtml.js')).BEMHTML;
 
 vm.runInNewContext(bemtreeFile, ctx);
 
 var BEMTREE = ctx.BEMTREE;
 
-var blocks = [];
+var blocks = {};
 
 walker.on('data', function(data) {
     var entity = data.entity,
         type = naming.typeOf(entity),
-        block = entity.block;
+        block = entity.block,
+        level = data.level,
+        lib = level.split('/')[2];
+
+    blocks[lib] || (blocks[lib] = []);
 
     // if (['block', 'blockMod'].indexOf(type) < 0) return;
     if (['block'].indexOf(type) < 0) return;
-    if (blocks.indexOf(block) > -1) return;
+    if (blocks[lib].indexOf(block) > -1) return;
 
-    blocks.push(block);
+    blocks[lib].push(block);
 
     // console.log(data);
     // console.log(naming.typeOf(data.bem));
@@ -48,7 +57,7 @@ walker.on('end', function() {
         block: 'root',
         blocks: blocks
     }).then(function(bemjson) {
-        fs.writeFileSync('desktop.bundles/index/index.html', BEMHTML.apply(bemjson));
+        fs.writeFileSync(path.join(pathToBundle, bundleName + '.html'), BEMHTML.apply(bemjson));
     });
 });
 
