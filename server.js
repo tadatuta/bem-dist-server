@@ -4,7 +4,9 @@ var fs = require('fs'),
     url = require('url'),
     spawn = require('child_process').spawn,
     cache = {},
-    port = process.env.PORT || 9000;
+    port = process.env.PORT || 9000,
+    techs = require('./config').techs,
+    distConfigTmpl = fs.readFileSync('dist-config.tmpl.js', 'utf8');
 
 try {
     cache = require('./cache.json');
@@ -14,43 +16,17 @@ function updateConfig(nodeName, blocks) {
     var placeholder = '// placeholder',
         conf = fs.readFileSync('dists/.enb/make.js', 'utf8'),
         confArr = conf.split(placeholder),
-        distConf = buildDistConfig(nodeName, blocks);
+        distConf = distConfigTmpl
+            .replace('<%nodeName%>', nodeName)
+            .replace('<%blocks%>', blocks.map(function(i) { return "'" + i + "'" }).join(','));
 
     confArr.splice(1, 0, placeholder, '\n\n', distConf);
 
     fs.writeFileSync('dists/.enb/make.js', confArr.join(''));
 }
 
-var distConfigTmpl = fs.readFileSync('dist-config.tmpl.js', 'utf8');
-
-function buildDistConfig(nodeName, blocks) {
-    return distConfigTmpl
-        .replace('<%nodeName%>', nodeName)
-        .replace('<%blocks%>', blocks.map(function(i) { return "'" + i + "'" }).join(','));
-}
-
 function buildDownloadLinks(timestamp) {
-    return [
-        'css',
-        'ie.css',
-
-        'js',
-        'js+bemhtml.js',
-        'js+bh.js',
-
-        'bemhtml.js',
-        'bh.js',
-
-        'dev.css',
-        'dev.ie.css',
-
-        'dev.js',
-        'dev.js+bemhtml.js',
-        'dev.js+bh.js',
-
-        'dev.bemhtml.js',
-        'dev.bh.js'
-    ].map(function(tech) {
+    return techs.map(function(tech) {
         return '<a href="/dists/dist' + timestamp + '/dist' + timestamp + '.' + tech + '">dist' + timestamp + '.' + tech + '</a>';
     }).join('<br>');
 }
