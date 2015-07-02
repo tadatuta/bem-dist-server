@@ -8,11 +8,11 @@ var fs = require('fs'),
     vm = require('vm'),
     path = require('path'),
 
+    levels = require('./config').levels.map(function(lvl) {
+        return path.join('dists', lvl);
+    }),
     walk = require('bem-walk'),
-    walker = walk([
-        'dists/libs/bem-components/common.blocks',
-        'dists/libs/bem-grid/common.blocks'
-    ]),
+    walker = walk(levels),
     naming = new require('bem-naming')(),
 
     pathToBundles = path.resolve('.', 'static', 'desktop.bundles'),
