@@ -1,5 +1,6 @@
 ({
     shouldDeps: [
+        'levels',
         {
             block: 'checkbox',
             mods: { theme: 'islands', size: 'm' }

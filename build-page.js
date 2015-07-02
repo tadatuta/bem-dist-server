@@ -13,6 +13,9 @@ var fs = require('fs'),
     bundleName = 'index',
     pathToBundle = path.join(pathToBundles, bundleName),
 
+    bowerDeps = require('./dists/bower.json').dependencies,
+    libsToDocs = require('./libs-to-docs'),
+
     vow = require('./static/libs/bem-core/common.blocks/vow/vow.vanilla.js'),
     bemtreeFile = fs.readFileSync(path.join(pathToBundle, bundleName + '.bemtree.js'), 'utf-8'),
     ctx = vm.createContext({
@@ -46,7 +49,9 @@ walker.on('data', function(data) {
 walker.on('end', function() {
     BEMTREE.apply({
         block: 'root',
-        blocks: blocks
+        blocks: blocks,
+        libs: bowerDeps,
+        libsToDocs: libsToDocs
     }).then(function(bemjson) {
         fs.writeFileSync(path.join(pathToBundle, bundleName + '.html'), BEMHTML.apply(bemjson));
     });

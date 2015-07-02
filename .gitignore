@@ -19,5 +19,6 @@ static/*.bundles/*/*.bemhtml.bemdecl.js
 
 cache.json
 dists/dist*
+dists/*.gzip
 dists/libs
 dists/.enb/tmp/

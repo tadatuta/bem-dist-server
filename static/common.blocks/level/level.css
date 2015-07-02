@@ -1,0 +1,27 @@
+.level
+{
+    margin-bottom: 28px;
+}
+
+.level__title
+{
+    font-weight: normal;
+    margin: 0 0 8px 0;
+}
+
+.level__title .link
+{
+    color: #000;
+    text-decoration: none;
+}
+
+.level__title .link:hover
+{
+    text-decoration: underline;
+}
+
+.level__version
+{
+    font-size: 12px;
+    color: #ccc;
+}

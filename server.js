@@ -28,9 +28,10 @@ function updateConfig(nodeName, blocks) {
 }
 
 function buildDownloadLinks(timestamp) {
-    return techs.map(function(tech) {
-        return '<a href="/dists/dist' + timestamp + '/dist' + timestamp + '.' + tech + '">dist' + timestamp + '.' + tech + '</a>';
-    }).join('<br>');
+    return '<a href="/dists/dist' + timestamp + '.gzip">dist' + timestamp + '.gzip</a><br>' +
+        techs.map(function(tech) {
+            return '<a href="/dists/dist' + timestamp + '/dist' + timestamp + '.' + tech + '">dist' + timestamp + '.' + tech + '</a>';
+        }).join('<br>');
 }
 
 var routes = {
@@ -80,12 +81,23 @@ var routes = {
         });
 
         make.on('close', function(code) {
-            console.log('child process exited with code ' + code);
+            console.log('make exited with code ' + code);
             cache[queryStr] = timestamp;
-            fs.writeFileSync('cache.json', JSON.stringify(cache, null, 4));
-            res.writeHead(200, {'Content-Type': 'text/html'});
-            res.end(buildDownloadLinks(timestamp));
-            // res.end('<pre>' + JSON.stringify(require('./dists/dist' + timestamp + '/dist' + timestamp + '.bemdecl.js').blocks, null, 4) + '</pre>');
+
+            var tar = spawn('tar', ['-zcvf', 'dist' + timestamp + '.gzip', './dist' + timestamp], {
+                cwd: path.join(__dirname, 'dists')
+            });
+
+            tar.on('close', function(code) {
+                console.log('tar exited with code ' + code);
+
+                if (code !== 0) return res.writeHead(500, {'Content-Type': 'text/html'}).end('Error');
+
+                fs.writeFileSync('cache.json', JSON.stringify(cache, null, 4));
+                res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'});
+                res.end(buildDownloadLinks(timestamp));
+                // res.end('<pre>' + JSON.stringify(require('./dists/dist' + timestamp + '/dist' + timestamp + '.bemdecl.js').blocks, null, 4) + '</pre>');
+            });
         });
     },
     '/dist': function(req, res) {
@@ -96,14 +108,18 @@ var routes = {
             return res.end('Not found');
         }
 
-        res.writeHead(200, {'Content-Type': 'text/plain'});
-        res.end(fs.readFileSync(pathToFile, 'utf8'));
+        res.writeHead(200, {
+            'Content-Type': req.pathname.indexOf('gzip') > -1 ?
+                'application/x-gtar' : 'text/plain;charset=utf-8'
+            });
+
+        res.end(fs.readFileSync(pathToFile));
     }
 }
 
 var server = http.createServer(function (req, res) {
     if (req.url === '/') {
-        res.writeHead(200, {'Content-Type': 'text/html'});
+        res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'});
         return res.end(fs.readFileSync(path.join(__dirname, 'static', 'desktop.bundles', 'index', 'index.html'), 'utf8'))
     }
 
