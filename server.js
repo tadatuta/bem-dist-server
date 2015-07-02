@@ -3,7 +3,8 @@ var fs = require('fs'),
     http = require('http'),
     url = require('url'),
     spawn = require('child_process').spawn,
-    cache = {};
+    cache = {},
+    port = process.env.PORT || 9000;
 
 try {
     cache = require('./cache.json');
@@ -211,6 +212,6 @@ http.createServer(function (req, res) {
     }
     res.writeHead(404);
     res.end('Not found');
-}).listen(9000);
+}).listen(port);
 
-console.log('Server running at http://localhost:9000/');
+console.log('Server running at http://localhost:' + port + '/');

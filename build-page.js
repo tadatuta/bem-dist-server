@@ -1,9 +1,3 @@
-// TODO:
-// показывать блоки из bem-core, других библиотек
-// давать возможность выбрать платформу
-// предлагать, какие именно уровни необходимо собрать
-// предлагать, какие именно технологии необходимо собрать
-
 var fs = require('fs'),
     vm = require('vm'),
     path = require('path'),
@@ -47,9 +41,6 @@ walker.on('data', function(data) {
     if (blocks[lib].indexOf(block) > -1) return;
 
     blocks[lib].push(block);
-
-    // console.log(data);
-    // console.log(naming.typeOf(data.bem));
 });
 
 walker.on('end', function() {
