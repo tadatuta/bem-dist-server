@@ -2,6 +2,7 @@ var fs = require('fs'),
     path = require('path'),
     http = require('http'),
     url = require('url'),
+    querystring = require('querystring'),
     spawn = require('child_process').spawn,
     cache = {},
     port = process.env.PORT || 9000,
@@ -33,34 +34,40 @@ function buildDownloadLinks(timestamp) {
 
 var routes = {
     '/': function(req, res) {
-        var query = url.parse(req.url).query,
+        var queryStr = url.parse(req.url).query,
             timestamp;
 
-        if (timestamp = cache[query]) {
+        console.log(queryStr);
+
+        if (timestamp = cache[queryStr]) {
             console.log('cache hit');
             res.end(buildDownloadLinks(timestamp));
             return;
         }
 
-        if (!query || query.indexOf('blocks') < 0) {
+        if (!queryStr || queryStr.indexOf('blocks') < 0) {
             res.writeHead(404);
             return res.end();
         }
 
         timestamp = +(new Date());
 
-        var blocks = query.split('&').map(function(item) {
-            return item.split('=')[1];
-        });
+        query = querystring.parse(queryStr);
 
-        var distFolder = 'dist' + timestamp;
+        var blocks = query.blocks,
+            distFolder = 'dist' + timestamp;
 
         // console.log(blocks);
 
         updateConfig(distFolder, blocks);
 
+        // TODO: think about using ENB via JS API
+        var env = process.env;
+        env.enbPlatform = query.platform;
+
         var make = spawn('/usr/bin/env', ['enb', 'make', distFolder, '-n'], {
-            cwd: path.join(__dirname, 'dists')
+            cwd: path.join(__dirname, 'dists'),
+            env: env
         });
 
         make.stdout.on('data', function(data) {
@@ -73,7 +80,7 @@ var routes = {
 
         make.on('close', function(code) {
             console.log('child process exited with code ' + code);
-            cache[query] = timestamp;
+            cache[queryStr] = timestamp;
             fs.writeFileSync('cache.json', JSON.stringify(cache, null, 4));
             res.writeHead(200, {'Content-Type': 'text/html'});
             res.end(buildDownloadLinks(timestamp));

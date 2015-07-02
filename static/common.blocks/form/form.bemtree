@@ -25,6 +25,20 @@ block('form').content()(function() {
             ]
         }
     }).concat({
+        elem: 'label',
+        content: 'Platform:'
+    },
+    {
+        block: 'radio-group',
+        mods: { theme: 'islands', size: 'm', type: 'line' },
+        mix: { block: 'form', elem: 'item' },
+        name: 'platform',
+        val: 'desktop',
+        options: ['desktop', 'touch'].map(function(platform) {
+            return { val: platform, text: platform };
+        })
+    },
+    {
         elem: 'controls',
         content: [
             {
@@ -39,9 +53,9 @@ block('form').content()(function() {
             }
         ]
     },
-    { elem: 'result' },
     {
         block: 'spin',
         mods: { theme: 'islands', size: 'xl' }
-    });
+    },
+    { elem: 'result' });
 });

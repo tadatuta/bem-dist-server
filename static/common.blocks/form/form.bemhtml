@@ -8,5 +8,8 @@ block('form')(
             method: ctx.method,
             action: ctx.action
         });
-    })
+    }),
+    elem('label')(
+        tag()('label')
+    )
 );

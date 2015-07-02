@@ -5,10 +5,15 @@
 
 .form__item
 {
-    margin-bottom: 4px;
+    margin: 4px 0;
 }
 
 .form__controls
 {
     margin: 14px 0;
+}
+
+.form__label
+{
+    margin-right: 6px;
 }
