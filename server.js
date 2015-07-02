@@ -1,5 +1,6 @@
 var fs = require('fs'),
     path = require('path'),
+    net = require('net'),
     http = require('http'),
     url = require('url'),
     querystring = require('querystring'),
@@ -100,7 +101,7 @@ var routes = {
     }
 }
 
-http.createServer(function (req, res) {
+var server = http.createServer(function (req, res) {
     if (req.url === '/') {
         res.writeHead(200, {'Content-Type': 'text/html'});
         return res.end(fs.readFileSync(path.join(__dirname, 'static', 'desktop.bundles', 'index', 'index.html'), 'utf8'))
@@ -122,6 +123,34 @@ http.createServer(function (req, res) {
     }
     res.writeHead(404);
     res.end('Not found');
-}).listen(port);
+}).listen(port, function() {
+    // downgrade process user to owner of this file
+    return fs.stat(__filename, function(err, stats) {
+        if (err) throw err;
+        return process.setuid(stats.uid);
+    });
 
-console.log('Server running at http://localhost:' + port + '/');
+    console.log('Server running at http://localhost:' + port + '/');
+});
+
+// port is a UNIX socket file
+if (isNaN(parseInt(port))) {
+    server.on('listening', function() {
+        // set permissions
+        return fs.chmod(port, 0777);
+    });
+
+    // double-check EADDRINUSE
+    server.on('error', function(e) {
+        if (e.code !== 'EADDRINUSE') throw e;
+        net.connect({ path: port }, function() {
+            // really in use: re-throw
+            throw e;
+        }).on('error', function(e) {
+            if (e.code !== 'ECONNREFUSED') throw e;
+            // not in use: delete it and re-listen
+            fs.unlinkSync(port);
+            server.listen(port);
+        });
+    });
+}
