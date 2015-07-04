@@ -10,7 +10,7 @@
   ],
   "dependencies": {
     "bem-components": "~2.2.1",
-    "bem-grid": "bem-incubator/bem-grid#master",
+    "bem-grid": "~1.2.4",
     "bem-history": "~3.0.0"
   }
 }
